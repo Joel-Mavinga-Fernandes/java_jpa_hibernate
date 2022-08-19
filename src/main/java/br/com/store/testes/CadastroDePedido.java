@@ -37,6 +37,9 @@ public class CadastroDePedido {
 		
 		em.getTransaction().commit();
 		
+		BigDecimal valor = pedidoDao.valorTotalVendido();
+		System.out.println(valor);
+		
 		
 
 	}
