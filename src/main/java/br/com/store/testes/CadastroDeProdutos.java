@@ -17,24 +17,24 @@ public class CadastroDeProdutos {
 
 	public static void main(String[] args) {
 		
-		cadastrarProduto();
-		EntityManager em = JPAUtil.getEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
+//		cadastrarProduto();
+//		EntityManager em = JPAUtil.getEntityManager();
+//		ProdutoDao produtoDao = new ProdutoDao(em);
 		
-		Produto p = produtoDao.buscarPorId(1l);
-		System.out.println(p.getPreco());
+//		Produto p = produtoDao.buscarPorId(1l);
+//		System.out.println(p.getPreco());
 		
-		 List<Produto> all = produtoDao.findAll();
-		 all.forEach(p1 -> System.out.println(p.getNome()));
-		 
-		 List<Produto> findByName = produtoDao.findByName("IPhone");
-		 findByName.forEach(p2 -> System.out.println(p.getNome()));
-		 
-		 List<Produto> findByCategoriaName = produtoDao.findByCategoriaName("CELULARES");
-		 findByCategoriaName.forEach(p3 -> System.out.println(p.getNome()));
-		 
-		 BigDecimal precoDoProduto = produtoDao.findPriceByProductName("IPhone");
-		 System.out.println("Preço do produto: " + precoDoProduto);
+//		 List<Produto> all = produtoDao.findAll();
+//		 all.forEach(p1 -> System.out.println(p.getNome()));
+//		 
+//		 List<Produto> findByName = produtoDao.findByName("PlayStation");
+//		 findByName.forEach(p2 -> System.out.println(p.getNome()));
+//		 
+//		 List<Produto> findByCategoriaName = produtoDao.findByCategoriaName("CELULARES");
+//		 findByCategoriaName.forEach(p3 -> System.out.println(p.getNome()));
+//		 
+//		 BigDecimal precoDoProduto = produtoDao.findPriceByProductName("IPhone");
+//		 System.out.println("Preço do produto: " + precoDoProduto);
 		
 		
 
@@ -42,19 +42,29 @@ public class CadastroDeProdutos {
 	}
 
 	private static void cadastrarProduto() {
-		Categoria celulares = new Categoria("CELULARES");
+//		Categoria celulares = new Categoria("CELULARES");
+//		Categoria games = new Categoria("VIDEO GAME");
+//		Categoria informatica = new Categoria("INFORMAICA");
+//
+//		Produto celular = new Produto("IPhone", "Pro Max", new BigDecimal(1220), celulares);
+//		Produto game = new Produto("PlayStation", "PS5", new BigDecimal(500), games);
+//		Produto infor = new Produto("Mac", "Pro", new BigDecimal(3200), informatica);
+//		
+//
+//		EntityManager em = JPAUtil.getEntityManager();
+//		ProdutoDao produtoDao = new ProdutoDao(em);
+//		CategoriaDao categoriaDao = new CategoriaDao(em);
 
-		Produto celular = new Produto("IPhone", "Pro Max", new BigDecimal(1220), celulares);
-
-		EntityManager em = JPAUtil.getEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		CategoriaDao categoriaDao = new CategoriaDao(em);
-
-		em.getTransaction().begin();
-		categoriaDao.cadastrar(celulares);
-		produtoDao.cadastrar(celular);
-		em.flush();
-		em.clear();
+//		em.getTransaction().begin();
+//		categoriaDao.cadastrar(celulares);
+//		categoriaDao.cadastrar(games);
+//		categoriaDao.cadastrar(informatica);
+//		produtoDao.cadastrar(celular);
+//		produtoDao.cadastrar(game);
+//		produtoDao.cadastrar(infor);
+//		em.flush();
+//		em.clear();
+		
 	}
 
 }
