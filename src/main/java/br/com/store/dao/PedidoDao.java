@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import br.com.store.model.Categoria;
 import br.com.store.model.Pedido;
 import br.com.store.model.Produto;
-import br.com.store.model.Relatorio;
 import br.com.store.vo.RelatorioVendasVo;
 
 public class PedidoDao {
@@ -41,6 +40,12 @@ public class PedidoDao {
 				+ "ORDER BY item.quantidade DESC";
 		return em.createQuery(jpql, RelatorioVendasVo.class)
 				.getResultList();
+	}
+	
+	public Pedido findPedidoWhithClients(Long id) {
+		return em.createQuery("SELECT p FROM Pedido p JOIN FETCH p.cliente WHERE p.id = :id", Pedido.class)
+				.setParameter("id", id)
+				.getSingleResult();
 	}
 	
 

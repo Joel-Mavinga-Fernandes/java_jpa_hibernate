@@ -21,40 +21,54 @@ public class CadastroDePedido {
 
 	public static void main(String[] args) {
 		popularBancoDeDados();
-		
-		EntityManager em = JPAUtil.getEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		ClienteDao clienteDao = new ClienteDao(em);
-		
-		Produto produto = produtoDao.buscarPorId(1l);
-		Produto produto2 = produtoDao.buscarPorId(42l);
-		Produto produto3 = produtoDao.buscarPorId(47l);
-		Cliente cliente = clienteDao.buscarPorId(1l);
-		
-		em.getTransaction().begin();
-		
-		Pedido pedido = new Pedido(cliente);
-		pedido.adicionarItem(new ItemPedido(10, pedido, produto));
-		pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
-		
-		Pedido pedido2 = new Pedido(cliente);
-		pedido2.adicionarItem(new ItemPedido(2, pedido, produto3));
 
-		
+		EntityManager em = JPAUtil.getEntityManager();
+		Pedido pedido = em.find(Pedido.class, 1l);
 		PedidoDao pedidoDao = new PedidoDao(em);
-		pedidoDao.cadastrar(pedido);
-		pedidoDao.cadastrar(pedido2);
+		Pedido pedido1 = pedidoDao.findPedidoWhithClients(1l);
 		
-		em.getTransaction().commit();
+		em.close();
 		
-		List<RelatorioVendasVo> relatorio = pedidoDao.relatorioDeVendas();
-		relatorio.forEach(System.out::println);
+		System.out.println(pedido1.getCliente().getNome());
+		
+		
+		
+		
+//		ProdutoDao produtoDao = new ProdutoDao(em);
+//		ClienteDao clienteDao = new ClienteDao(em);
+//		
+//		Produto produto = produtoDao.buscarPorId(1l);
+//		Produto produto2 = produtoDao.buscarPorId(42l);
+//		Produto produto3 = produtoDao.buscarPorId(47l);
+//		Cliente cliente = clienteDao.buscarPorId(1l);
+//		List<Produto> produtoPorNomeCategoria = produtoDao.findByCategoriaName("VIDEO GAME");
+//		
+//		em.getTransaction().begin();
+//		
+//		Pedido pedido = new Pedido(cliente);
+//		pedido.adicionarItem(new ItemPedido(10, pedido, produto));
+//		pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
+//		
+//		Pedido pedido2 = new Pedido(cliente);
+//		pedido2.adicionarItem(new ItemPedido(2, pedido, produto3));
+//
+//		
+//		PedidoDao pedidoDao = new PedidoDao(em);
+//		pedidoDao.cadastrar(pedido);
+//		pedidoDao.cadastrar(pedido2);
+//		
+//		em.getTransaction().commit();
+//		
+//		List<RelatorioVendasVo> relatorio = pedidoDao.relatorioDeVendas();
+//		relatorio.forEach(System.out::println);
+//		
+//		produtoPorNomeCategoria.forEach(System.out::println);
+		
 		
 //		BigDecimal valor = pedidoDao.valorTotalVendido();
 //		System.out.println(valor);
 		
 		//List<Produto> produto1 = produtoDao.findByName("PlayStation");
-		
 		
 		
 
@@ -69,16 +83,26 @@ public class CadastroDePedido {
 		Produto game = new Produto("PlayStation", "PS5", new BigDecimal(500), games);
 		Produto infor = new Produto("Mac", "Pro", new BigDecimal(3200), informatica);
 		
-
-		
 		Cliente cliente = new Cliente("Jay", "123456");
 
 		EntityManager em = JPAUtil.getEntityManager();
 		ProdutoDao produtoDao = new ProdutoDao(em);
 		CategoriaDao categoriaDao = new CategoriaDao(em);
 		ClienteDao clienteDao = new ClienteDao(em);
+		PedidoDao pedidoDao = new PedidoDao(em);
+		
+		Produto produto = produtoDao.buscarPorId(1l);
+		Produto produto2 = produtoDao.buscarPorId(42l);
+		Produto produto3 = produtoDao.buscarPorId(47l);
 		
 		
+		Pedido pedido = new Pedido(cliente);
+		pedido.adicionarItem(new ItemPedido(10, pedido, produto));
+		pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
+		
+		Pedido pedido2 = new Pedido(cliente);
+		pedido2.adicionarItem(new ItemPedido(2, pedido, produto3));
+
 
 		em.getTransaction().begin();
 		categoriaDao.cadastrar(celulares);
@@ -88,6 +112,8 @@ public class CadastroDePedido {
 		produtoDao.cadastrar(game);
 		produtoDao.cadastrar(infor);
 		clienteDao.cadastrar(cliente);
+		pedidoDao.cadastrar(pedido);
+		pedidoDao.cadastrar(pedido2);
 		em.flush();
 		em.clear();
 	}
