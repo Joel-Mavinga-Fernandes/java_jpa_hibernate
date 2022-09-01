@@ -1,9 +1,15 @@
 package br.com.store.dao;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.criteria.Predicate;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import br.com.store.model.Categoria;
 import br.com.store.model.Produto;
@@ -48,6 +54,79 @@ public class ProdutoDao {
 		.setParameter("nome", nome)
 		.getSingleResult();
 	}
+	// Filtar por varios parametros com jpql
+	public List<Produto> findByParameters(String nome, BigDecimal preco, LocalDate dataCadastro){
+		String jpql = "SELEC p FROM Produto p WHERE 1=1 ";
+		if (nome != null && !nome.trim().isEmpty()) {
+			jpql = " AND p.nome = :nome ";
+		}
+		if (preco != null) {
+			jpql = " AND p.preco = :preco ";
+		}
+		if (dataCadastro != null) {
+			jpql =" AND p.dataCadastro = :dataCadastro ";
+		}
+		TypedQuery<Produto> query = em.createQuery(jpql, Produto.class);
+		if(nome != null && !nome.trim().isEmpty()) {
+			query.setParameter("nome", nome);
+		}
+		if (preco != null) {
+			query.setParameter("preco", preco);
+		}
+		if (dataCadastro != null) {
+			query.setParameter("dataCadastro", dataCadastro);
+		}
+		return query.getResultList();
+	}
+	
+	// Filtar por varios parametros com criteria builder
+	public List<Produto> findByParametersWhithCriteria(String nome, BigDecimal preco, LocalDate dataCadastro){
+		
+		 CriteriaBuilder builder = em.getCriteriaBuilder();
+		 CriteriaQuery<Produto> query = builder.createQuery(Produto.class);
+		 Root<Produto> from = query.from(Produto.class);
+		 
+		 Predicate filtros =  builder.and(); 
+		 if(nome != null && !nome.trim().isEmpty()) {
+			 filtros = builder.and(filtros, builder.equal(from.get("nome"), nome));
+		}
+		if (preco != null) {
+			filtros = builder.and(filtros, builder.equal(from.get("preco"), preco));	
+		}
+		if (dataCadastro != null) {
+			filtros = builder.and(filtros, builder.equal(from.get("dataCadastro"), dataCadastro));	
+		}
+		query.where(filtros);
+		
+		return em.createQuery(query).getResultList();
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

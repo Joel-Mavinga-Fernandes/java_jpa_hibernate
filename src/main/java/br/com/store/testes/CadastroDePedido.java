@@ -1,6 +1,7 @@
 package br.com.store.testes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,14 +24,18 @@ public class CadastroDePedido {
 		popularBancoDeDados();
 
 		EntityManager em = JPAUtil.getEntityManager();
-		Pedido pedido = em.find(Pedido.class, 1l);
-		PedidoDao pedidoDao = new PedidoDao(em);
-		Pedido pedido1 = pedidoDao.findPedidoWhithClients(1l);
+//		Pedido pedido = em.find(Pedido.class, 1l);
+//		PedidoDao pedidoDao = new PedidoDao(em);
+//		Pedido pedido1 = pedidoDao.findPedidoWhithClients(1l);
+//		
+//		em.close();
+//		
+//		System.out.println(pedido1.getCliente().getNome());
 		
-		em.close();
-		
-		System.out.println(pedido1.getCliente().getNome());
-		
+		ProdutoDao produtoDao = new ProdutoDao(em);
+		//List<Produto> pd = produtoDao.findByParametersWhithCriteria(null, null, LocalDate.now());
+		List<Produto> pd = produtoDao.findByParametersWhithCriteria("PlayStation", null, null);
+		System.out.println(pd.toString());
 		
 		
 		
@@ -91,18 +96,18 @@ public class CadastroDePedido {
 		ClienteDao clienteDao = new ClienteDao(em);
 		PedidoDao pedidoDao = new PedidoDao(em);
 		
-		Produto produto = produtoDao.buscarPorId(1l);
-		Produto produto2 = produtoDao.buscarPorId(42l);
-		Produto produto3 = produtoDao.buscarPorId(47l);
-		
-		
-		Pedido pedido = new Pedido(cliente);
-		pedido.adicionarItem(new ItemPedido(10, pedido, produto));
-		pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
-		
-		Pedido pedido2 = new Pedido(cliente);
-		pedido2.adicionarItem(new ItemPedido(2, pedido, produto3));
-
+//		Produto produto = produtoDao.buscarPorId(1l);
+//		Produto produto2 = produtoDao.buscarPorId(42l);
+//		Produto produto3 = produtoDao.buscarPorId(47l);
+//		
+//		
+//		Pedido pedido = new Pedido(cliente);
+//		pedido.adicionarItem(new ItemPedido(10, pedido, produto));
+//		pedido.adicionarItem(new ItemPedido(40, pedido, produto2));
+//		
+//		Pedido pedido2 = new Pedido(cliente);
+//		pedido2.adicionarItem(new ItemPedido(2, pedido, produto3));
+//
 
 		em.getTransaction().begin();
 		categoriaDao.cadastrar(celulares);
@@ -112,8 +117,8 @@ public class CadastroDePedido {
 		produtoDao.cadastrar(game);
 		produtoDao.cadastrar(infor);
 		clienteDao.cadastrar(cliente);
-		pedidoDao.cadastrar(pedido);
-		pedidoDao.cadastrar(pedido2);
+//		pedidoDao.cadastrar(pedido);
+//		pedidoDao.cadastrar(pedido2);
 		em.flush();
 		em.clear();
 	}
